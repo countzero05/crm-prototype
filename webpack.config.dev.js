@@ -1,6 +1,8 @@
 import ExtractTextPlugin from "extract-text-webpack-plugin";
 import webpack from "webpack";
 import path from "path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+// import FaviconsWebpackPlugin from "favicons-webpack-plugin";
 
 export default {
   // debug: true,
@@ -25,18 +27,26 @@ export default {
   output: {
     path: __dirname + "/dist", // Note: Physical files are only output by the production build task `npm run build`.
     publicPath: "/",
-    filename: "bundle.js"
+    filename: "[name].js"
   },
   devServer: {
     contentBase: "./src"
   },
   plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin({
-      filename: "style.css",
+      filename: "[name].css",
       allChunks: false
-    })
+    }),
+    new HtmlWebpackPlugin({
+      template: "src/index.html",
+      inject: "body",
+      favicon: path.join(__dirname, "src/static/images/favicon.png"),
+      hash: true
+    }),
+    // new FaviconsWebpackPlugin(path.join(__dirname, "src/static/images/favicon.png")),
   ],
   module: {
     rules: [
@@ -53,8 +63,12 @@ export default {
           ]
         })
       },
-      {test: /\.js$/, include: path.join(__dirname, "src"), loader: "babel-loader",
+      {
+        test: /\.js$/,
+        include: path.join(__dirname, "src"),
+        loader: "babel-loader",
         query: {
+          cacheDirectory: true,
           presets: ["react", ["env", {
             "targets": {
               "browsers": ["last 3 versions"]
@@ -67,7 +81,7 @@ export default {
       // {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader"},
       // {test: /\.(woff|woff2)$/, loader: "url-loader?prefix=font/&limit=5000"},
       {test: /\.ico$/, loader: "file-loader?name=[name].[ext]"},
-      {test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/, loader: "file-loader?name=fonts/[name].[ext]"},
+      {test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/, loader: "file-loader?name=fonts/[name]__[hash].[ext]"},
       // {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream"},
       // {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=image/svg+xml"},
       // {
