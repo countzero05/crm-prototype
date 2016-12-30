@@ -11,7 +11,6 @@ import App from "./components/app";
 import LogoutPage from "./components/auth/logoutPage";
 import "react-toolbox/lib/commons.scss";
 import "./static/stylesheets/style.scss";
-import "./static/images/favicon.ico";
 
 ReactDom.render((
   <Router history={browserHistory}>
