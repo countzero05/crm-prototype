@@ -7,7 +7,7 @@ const _ListItem = ({to, onClick, ...props}, {router}) => {
       ...props, onClick: e => {
         e.preventDefault();
         router.push(router.createHref(to));
-        return onClick(e);
+        return onClick !== undefined ? onClick(e) : true;
       }, to: router.createHref(to)
     }
   }
