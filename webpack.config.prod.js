@@ -46,7 +46,7 @@ export default {
     new HtmlWebpackPlugin({
       template: "src/index.html",
       inject: "body",
-      favicon: path.join(__dirname, "src/static/images/favicon.png"),
+      // favicon: path.join(__dirname, "src/static/images/favicon.png"),
       hash: true
     }),
   ],
