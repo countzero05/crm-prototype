@@ -1,0 +1,10 @@
+'use strict';
+
+module.exports = {
+  mongo: {
+    host: '192.168.15.10',
+    port: 27017,
+    db: 'plus-fraud'
+  },
+  hasOffersUrl: 'https://api.hasoffers.com/Apiv3/json'
+};

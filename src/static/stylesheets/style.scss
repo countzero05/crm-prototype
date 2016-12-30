@@ -1,0 +1,179 @@
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins/_responsive-visibility.scss";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_responsive-utilities.scss";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins/_clearfix.scss";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins/_grid-framework.scss";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/mixins/_grid.scss";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_grid.scss";
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: url(./../../../node_modules/material-design-icons/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local("Material Icons"),
+  local("MaterialIcons-Regular"),
+  url(./../../../node_modules/material-design-icons/iconfont/MaterialIcons-Regular.woff2) format("woff2"),
+  url(./../../../node_modules/material-design-icons/iconfont/MaterialIcons-Regular.woff) format("woff"),
+  url(./../../../node_modules/material-design-icons/iconfont/MaterialIcons-Regular.ttf) format("truetype");
+}
+
+:global .material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  -moz-osx-font-smoothing: grayscale;
+
+  font-feature-settings: "liga";
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.no-selection {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+:global .container {
+  flex: 1;
+  height: 100vh;
+}
+
+.cardFormSection {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 700px;
+}
+
+:global #app [data-react-toolbox="panel"] {
+  justify-content: flex-start;
+}
+
+:global #app .flat-btn {
+  min-width: 5rem;
+}
+
+.pagination {
+  text-align: right;
+  border-bottom: 1px solid #303f9f;
+  color: #757575;
+  font-size: 1.4rem;
+
+  position: fixed;
+  right: 0;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.7);
+
+  white-space: nowrap;
+}
+
+.pagination input {
+  border-bottom: 0;
+}
+
+:global #app [data-react-toolbox="sidebar"] {
+  position: absolute;
+}
+
+:global .row-statistics {
+  white-space: nowrap;
+}
+
+:global .row-statistics > div {
+  display: inline-block;
+  padding-left: 1rem;
+}
+
+:global [data-react-toolbox="sidebar"] [data-react-toolbox="switch"] {
+  margin-bottom: 0;
+}
+
+.sort-chevron {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.sort-chevron::before {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  -moz-osx-font-smoothing: grayscale;
+
+  font-feature-settings: "liga";
+}
+
+.up-chevron .sort-chevron::before {
+  content: "keyboard_arrow_up";
+}
+
+.down-chevron .sort-chevron::before {
+  content: "keyboard_arrow_down";
+}
+
+:global .progress-load {
+  position: fixed;
+  height: 5px;
+  z-index: 1;
+
+  transition: width 3s ease, opacity 3ms ease;
+  width: 0;
+  opacity: 0;
+  background-color: #1b9a59;
+}
+
+:global .progress-load.run {
+  transition: width 3s ease, opacity 0.1s ease;
+
+  width: 100%;
+  opacity: 1;
+}
+
+:global [data-react-toolbox="dialog"].report-dialog [role="body"] {
+  padding: 0.4rem;
+}
+
+:global #app form {
+  padding: 1rem;
+}
+
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.bordered {
+  //border: 1px solid #eee;
+}
