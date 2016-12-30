@@ -163,7 +163,7 @@ class StaffListPage extends Component {
             <section key={key} className={style["row"]} style={{borderBottom: "1px solid #bbb"}}>
               <ListSubHeader
                 className={`${style["col-xs-12"]} ${style["col-sm-12"]} ${style["col-md-12"]} ${style["col-lg-12"]}`}
-                caption={_users[key].name}/>
+                caption={_users[key] === undefined ? "Unsigned" : _users[key].name}/>
               {grouped[key].map(person => (
                 <ListItem
                   leftIcon="account_box"
