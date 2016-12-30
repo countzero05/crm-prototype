@@ -31,7 +31,7 @@ export default (WrappedComponent, createElements) =>
       setActions = (actions) => this.setState({actions});
 
       shouldComponentUpdate(nextProps, nextState) {
-        return this.state !== nextState || nextProps.location.query !== this.props.location.query;
+        return this.state !== nextState || nextProps.location !== this.props.location;
       }
 
       render() {

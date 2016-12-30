@@ -45,7 +45,11 @@ class StaffPage extends Component {
       UserActions.initialize();
     }
 
-    this.props.setActions({
+    this.setActions();
+  }
+
+  setActions = () => {
+    let actions = {
       save: {
         icon: "save",
         // label: "Save",
@@ -59,8 +63,19 @@ class StaffPage extends Component {
         href: "/staff"
         // onClick: this.goMain
       }
-    });
-  }
+    };
+
+    if (this.state.person._id) {
+      actions.remove = {
+        icon: "delete",
+        // label: "Save",
+        title: "Delete",
+        onClick: this.removeStaff
+      }
+    }
+
+    this.props.setActions(actions);
+  };
 
   componentWillUnmount() {
     StaffStore.removeChangeListener(this._onChange);
@@ -70,6 +85,7 @@ class StaffPage extends Component {
   _onChange = (event_type, data) => {
     if (event_type === ActionTypes.UPDATE_STAFF || event_type === ActionTypes.CREATE_STAFF || event_type === ActionTypes.INITIALIZE_STAFF) {
       this.setState({person: data});
+      this.setActions();
     } else if (event_type === ActionTypes.INITIALIZE_USERS) {
       this.setState({users: data})
     }
@@ -78,6 +94,7 @@ class StaffPage extends Component {
   fieldChange = (name, value) => this.setState({person: {...this.state.person, [name]: value}});
 
   saveStaff = () => (this.state._id ? StaffActions.updateStaff(this.state.person) : StaffActions.createStaff(this.state.person)).then((staff) => staff.error === undefined ? this.goMain() : staff);
+  removeStaff = () => StaffActions.removeStaff(this.state.person._id).then((staff) => staff.error === undefined ? this.goMain() : staff);
 
   goMain = () => this.context.router.push(`/staff`);
 
