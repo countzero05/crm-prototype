@@ -91,13 +91,13 @@ class StaffListPage extends Component {
           // label: "Create",
           title: "Create",
           icon: "person_add",
-          href: `/staff/create`
+          href: this.context.router.createHref({...location, pathname: `/staff/create`})
         },
         edit: {
           // label: "Edit",
           title: "Edit",
           icon: "edit",
-          href: `/staff/${this.state.staffs[selected[0]]._id}`
+          href: this.context.router.createHref({...location, pathname: `/staff/${this.state.staffs[selected[0]]._id}`})
         },
         remove: {
           // label: "Remove",
@@ -112,7 +112,7 @@ class StaffListPage extends Component {
           // label: "Create",
           title: "Create",
           icon: "person_add",
-          href: `/staff/create`
+          href: this.context.router.createHref({...location, pathname: `/staff/create`})
         }
       })
     }
@@ -174,7 +174,7 @@ class StaffListPage extends Component {
                   caption={person.name}
                   legend={`${person.dateStart ? format("yyyy-MM-dd", person.dateStart) : ""} ${person.dateStart || person.dateEnd ? "-" : ""} ${person.dateEnd ? format("yyyy-MM-dd", person.dateEnd) : ""}`}
                   rightIcon={person.active ? "star" : undefined}
-                  to={`/staff/${person._id}`}
+                  to={this.context.router.createHref({...location, pathname: `/staff/${person._id}`})}
                 />
               ))}
             </section>

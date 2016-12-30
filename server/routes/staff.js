@@ -11,8 +11,8 @@ const _fields = {
   comment: String,
   active: Boolean,
   partner: val => val ? String(val) : null,
-  dateStart: val => new Date(val),
-  dateEnd: val => new Date(val),
+  dateStart: val => val ? new Date(val) : val,
+  dateEnd: val => val ? new Date(val) : val,
 };
 
 const filter = (obj, fields = _fields) => {

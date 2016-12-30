@@ -11,7 +11,8 @@ class StaffPage extends Component {
 
   static propTypes = {
     params: PropTypes.object.isRequired,
-    setActions: PropTypes.func.isRequired
+    setActions: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired
   };
 
   static contextTypes = {
@@ -27,6 +28,7 @@ class StaffPage extends Component {
         email: "",
         comment: "",
         active: false,
+        partner: props.location.query.partner ? props.location.query.partner : null
       },
       users: []
     };
@@ -60,7 +62,7 @@ class StaffPage extends Component {
         icon: "backspace",
         // label: "Cancel",
         title: "Cancel",
-        href: "/staff"
+        href: this.context.router.createHref({...location, pathname: `/staff`})
         // onClick: this.goMain
       }
     };
@@ -96,7 +98,7 @@ class StaffPage extends Component {
   saveStaff = () => (this.state._id ? StaffActions.updateStaff(this.state.person) : StaffActions.createStaff(this.state.person)).then((staff) => staff.error === undefined ? this.goMain() : staff);
   removeStaff = () => StaffActions.removeStaff(this.state.person._id).then((staff) => staff.error === undefined ? this.goMain() : staff);
 
-  goMain = () => this.context.router.push(`/staff`);
+  goMain = () => this.context.router.push(this.context.router.createHref({...location, pathname: `/staff`}));
 
   render() {
     const {person} = this.state;
