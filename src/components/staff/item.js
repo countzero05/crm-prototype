@@ -21,10 +21,6 @@ class StaffPage extends Component {
   constructor(props) {
     super(props);
 
-    if (props.params.id) {
-      StaffActions.initializeStaff(props.params.id);
-    }
-
     this.state = {
       person: {
         name: "",
@@ -40,6 +36,10 @@ class StaffPage extends Component {
   componentWillMount() {
     StaffStore.addChangeListener(this._onChange);
     UserStore.addChangeListener(this._onChange);
+
+    if (this.props.params.id) {
+      StaffActions.initializeStaff(this.props.params.id);
+    }
 
     if (!UserStore.getUsers().length) {
       UserActions.initialize();

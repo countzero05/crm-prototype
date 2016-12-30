@@ -19,10 +19,6 @@ class UserPage extends Component {
   constructor(props) {
     super(props);
 
-    if (props.params.id) {
-      UserActions.initializeUser(props.params.id);
-    }
-
     this.state = {
       name: "",
       email: "",
@@ -35,6 +31,10 @@ class UserPage extends Component {
 
   componentWillMount() {
     UserStore.addChangeListener(this._onChange);
+
+    if (this.props.params.id) {
+      UserActions.initializeUser(this.props.params.id);
+    }
 
     this.props.setActions({
       save: {
