@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 let Schema = mongoose.Schema;
 import uniqueValidator from "mongoose-unique-validator";
+import fs from "fs";
+import path from "path";
 
 const validateEmail = email => {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
@@ -68,6 +70,10 @@ staffSchema.pre("save", function (next) {
   this.updated = new Date();
 
   next();
+});
+
+staffSchema.post("remove", function () {
+  fs.unlink(path.join(__dirname, `../../../upload/${this.file}`));
 });
 
 staffSchema.options.toJSON = {

@@ -8,9 +8,9 @@ const fireAction = actionType => setTimeout(() => Dispatcher.dispatch({actionTyp
 const handleCatch = (...resp) => {
   let {data, status, statusText} = resp[0].response;
   if (status === 500) {
-    SnackActions.error(statusText + (data.error.constructor.name === "String" ? `: ${data.error}` : ""));
+    SnackActions.error(statusText + (data.error && data.error.constructor.name === "String" ? `: ${data.error}` : ""));
   } else {
-    SnackActions.warning(statusText + (data.error.constructor.name === "String" ? `: ${data.error}` : ""));
+    SnackActions.warning(statusText + (data.error && data.error.constructor.name === "String" ? `: ${data.error}` : ""));
   }
   fireAction(ActionTypes.STOP_REQUEST);
   if (status === 500) {

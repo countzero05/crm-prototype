@@ -140,23 +140,37 @@ router.put("/upload/:staff_id", (req, res) => {
       return res.status(404).json(null);
     }
 
-    const fname = `${staff._id}_${req.files.file.name}`;
+    const saveFile = () => {
+      const fname = `${staff._id}_${req.files.file.name}`;
 
-    fse.move(req.files.file.path, path.join(__dirname, `./../../upload/${fname}`), err => {
-      if (err) {
-        return res.status(400).json(mapErrors({}, err));
-      }
-
-      staff.file = fname;
-
-      staff.save((err, staff) => {
+      fse.move(req.files.file.path, path.join(__dirname, `../../upload/${fname}`), err => {
         if (err) {
-          return res.status(400).json(mapErrors(staff, err));
+          return res.status(400).json(mapErrors({}, err));
         }
 
-        res.json(staff);
+        staff.file = fname;
+
+        staff.save((err, staff) => {
+          if (err) {
+            return res.status(400).json(mapErrors(staff, err));
+          }
+
+          res.json(staff);
+        });
       });
-    });
+    };
+
+    if (staff.file) {
+      fs.access(path.join(__dirname, `../../upload/${staff.file}`), fs.constants.R_OK | fs.constants.W_OK, (err) => {
+        if (!err) {
+          fs.unlink(path.join(__dirname, `../../upload/${staff.file}`), saveFile());
+        } else {
+          saveFile();
+        }
+      });
+    } else {
+      saveFile();
+    }
 
   });
 });
@@ -175,7 +189,7 @@ router.get("/download/:staff_id", function(req, res){
     if (req.user.role.toLowerCase() === "manager" && String(req.user._id) !== String(staff.partner)) {
       return res.status(404).json(null);
     }
-    const file = path.join(__dirname, `./../../upload/${staff.file}`);
+    const file = path.join(__dirname, `../../upload/${staff.file}`);
 
     const filename = path.basename(file);
     const mimetype = mime.lookup(file);

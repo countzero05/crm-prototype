@@ -56,8 +56,8 @@ export const uploadStaff = (user, file) =>
       SnackActions.success("Staff saved.");
     }
     Dispatcher.dispatch({
-      actionType: ActionTypes.UPDATE_STAFF,
-      user: user
+      actionType: ActionTypes.UPLOAD_STAFF,
+      user: {...user}
     });
 
     return user;

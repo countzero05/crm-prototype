@@ -46,5 +46,5 @@ export const upload = (id, file) => {
   const data = new FormData();
   data.append("file", file);
 
-  return request.put(`/api/staff/upload/${id}`, data);
+  return request.put(`/api/staff/upload/${id}`, data).then(({data}) => filter(data) || {});
 };

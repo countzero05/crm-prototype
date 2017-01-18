@@ -92,8 +92,8 @@ class StaffPage extends Component {
   }
 
   _onChange = (event_type, data) => {
-    if (event_type === ActionTypes.UPDATE_STAFF || event_type === ActionTypes.CREATE_STAFF || event_type === ActionTypes.INITIALIZE_STAFF) {
-      this.setState({person: {...this.state.person, ...data}});
+    if (event_type === ActionTypes.UPDATE_STAFF || event_type === ActionTypes.CREATE_STAFF || event_type === ActionTypes.INITIALIZE_STAFF || event_type === ActionTypes.UPLOAD_STAFF) {
+      this.setState({person: {...{...this.state.person, ...data}}});
       this.setActions();
     } else if (event_type === ActionTypes.INITIALIZE_USERS) {
       this.setState({users: data})
@@ -199,12 +199,14 @@ class StaffPage extends Component {
           onSubmit={this.saveStaff}
         />
 
-        <Input
-          type="file"
-          icon="attach_file"
-          onChange={this.handleFile}
-          error={this.state.person.error && this.state.person.error.file}
-        />
+        {this.state.person._id ? (
+            <Input
+              type="file"
+              icon="attach_file"
+              onChange={this.handleFile}
+              error={this.state.person.error && this.state.person.error.file}
+            />
+          ) : null}
 
         {this.state.person.file ? (
             <Link
