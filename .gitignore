@@ -38,3 +38,6 @@ node_modules
 
 config/config.json
 config/index.js
+
+upload/
+!upload/.gitkeep

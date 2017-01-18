@@ -49,7 +49,7 @@ class App extends Component {
   };
 
   render() {
-    const {user} = this.state;
+    const user = MeStore.getUser();
 
     return user ? user._id ? (
           <Layout>

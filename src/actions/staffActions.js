@@ -48,6 +48,21 @@ export const updateStaff = user =>
     return user;
   });
 
+export const uploadStaff = (user, file) =>
+  StaffApi.upload(user._id, file).then(user => {
+    if (user.error) {
+      SnackActions.error(user.error);
+    } else {
+      SnackActions.success("Staff saved.");
+    }
+    Dispatcher.dispatch({
+      actionType: ActionTypes.UPDATE_STAFF,
+      user: user
+    });
+
+    return user;
+  });
+
 export const removeStaff = user =>
   StaffApi.deleteStaff(user).then(user => {
     Dispatcher.dispatch({

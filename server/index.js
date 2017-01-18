@@ -12,7 +12,7 @@ import me from "./routes/me";
 import auth from "./routes/auth";
 import mongoose, {User} from "./../tools/lib/mongoose";
 import session from "express-session";
-
+import formData from "express-form-data";
 const MongoStore = require("connect-mongo")(session);
 
 const production = process.env.NODE_ENV === "production";
@@ -38,6 +38,7 @@ if (production) {
   app.use(require("webpack-hot-middleware")(compiler));
 }
 
+app.use(formData.parse());
 app.use(bodyParser({limit: "50mb"}));
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -91,8 +92,7 @@ app.use(function (/*err, */req, res, next) {
   });
 })();
 
-function requireRole(role, methods) {
-  methods = methods || [];
+function requireRole(role, methods = []) {
   return function (req, res, next) {
     if (req.user && req.user.active && (["admin", role.toLowerCase()].indexOf(req.user.role.toLowerCase()) !== -1) && (req.user.role.toLowerCase() == "admin" || !methods.length || methods.indexOf(req.method.toLowerCase()) != -1)) {
       next();
@@ -130,7 +130,7 @@ function loadUser(req, res, next) {
 app.use(loadUser);
 
 app.use("/api/users", requireRole("admin"), users);
-app.use("/api/staff", requireRole("admin"), staff);
+app.use("/api/staff", requireRole("manager"), staff);
 app.use("/api/me", me);
 app.use("/api/auth", auth);
 

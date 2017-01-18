@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import crypto from "crypto";
+import uniqueValidator from "mongoose-unique-validator";
 let Schema = mongoose.Schema;
 
 const validateEmail = email => {
@@ -9,12 +10,12 @@ const validateEmail = email => {
 let userSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: "Name is required"
   },
   role: {
     type: String,
     enum: ["Admin", "Manager"],
-    required: true
+    required: "Role is required"
   },
   email: {
     type: String,
@@ -27,7 +28,7 @@ let userSchema = new Schema({
   password: {
     type: String,
     minlength: [6, "Password should contains more that 5 chcracters"],
-    required: true
+    required: "Password is required"
   },
   salt: {
     type: String,
@@ -58,6 +59,8 @@ let userSchema = new Schema({
     required: true
   }
 });
+
+userSchema.plugin(uniqueValidator, {message: "{PATH} is already in use, but it must be unique"});
 
 userSchema.methods.updateToken = function () {
   let hash, tokenCrypto;
@@ -146,6 +149,9 @@ userSchema.options.toJSON = {
     delete ret.__v;
     delete ret.password;
     delete ret.salt;
+    delete ret.token;
+    delete ret.token_created;
+    delete ret.arr;
 
     return ret;
   }

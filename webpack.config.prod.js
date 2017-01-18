@@ -1,7 +1,6 @@
 import webpack from "webpack";
 import path from "path";
 import ExtractTextPlugin from "extract-text-webpack-plugin";
-import HtmlWebpackPlugin from "html-webpack-plugin";
 
 const GLOBALS = {
   "process.env.NODE_ENV": JSON.stringify("production")
@@ -24,12 +23,13 @@ export default {
   output: {
     path: __dirname + "/dist", // Note: Physical files are only output by the production build task `npm run build`.
     publicPath: "/",
-    filename: "[name].js"
+    filename: "bundle.js"
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin(GLOBALS),
     // new webpack.optimize.DedupePlugin(),
+    // new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       output: {
         comments: false
@@ -40,14 +40,8 @@ export default {
       mangle: true
     }),
     new ExtractTextPlugin({
-      filename: "[name].css",
+      filename: "bundle.css",
       allChunks: false
-    }),
-    new HtmlWebpackPlugin({
-      template: "src/index.html",
-      inject: "body",
-      // favicon: path.join(__dirname, "src/static/images/favicon.png"),
-      hash: true
     }),
   ],
   module: {

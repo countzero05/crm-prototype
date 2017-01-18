@@ -7,6 +7,7 @@ export const DELETE_USER = Symbol("DELETE_USER");
 export const INITIALIZE_STAFFS = Symbol("INITIALIZE_STAFFS");
 export const INITIALIZE_STAFF = Symbol("INITIALIZE_STAFF");
 export const UPDATE_STAFF = Symbol("UPDATE_STAFF");
+export const UPLOAD_STAFF = Symbol("UPLOAD_STAFF");
 export const CREATE_STAFF = Symbol("CREATE_STAFF");
 export const DELETE_STAFF = Symbol("DELETE_STAFF");
 

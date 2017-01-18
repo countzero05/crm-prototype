@@ -35,15 +35,9 @@ Dispatcher.register(function (action) {
       MeStore.setUser(action.user);
       MeStore.emitChange(ActionTypes.GET_ME, action.user);
       break;
-    case ActionTypes.GET_ME_ALGORITHMS:
-      MeStore.emitChange(ActionTypes.GET_ME_ALGORITHMS, action.algorithms);
-      break;
     case ActionTypes.UPDATE_ME:
       MeStore.setUser(action.user);
       MeStore.emitChange(ActionTypes.UPDATE_ME, action.user);
-      break;
-    case ActionTypes.UPDATE_ME_ALGORITHMS:
-      MeStore.emitChange(ActionTypes.UPDATE_ME_ALGORITHMS, action.algorithms);
       break;
     case ActionTypes.LOGIN_USER:
       MeStore.setUser(action.user);

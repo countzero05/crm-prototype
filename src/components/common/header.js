@@ -63,6 +63,13 @@ const Header = ({active, toggle}) => {
             onClick={toggle}
           />
           <ListItem
+            caption="Staff"
+            legend="List of existing persons"
+            leftIcon="people"
+            to="/staff"
+            onClick={toggle}
+          />
+          <ListItem
             caption="Log out"
             legend="Log out from system"
             leftIcon="exit_to_app"

@@ -6,6 +6,7 @@ import * as ActionTypes from "./../../constants/actionTypes";
 import container from "./../common/container";
 import * as UserActions from "./../../actions/userActions";
 import UserStore from "./../../stores/userStore";
+import MeStore from "./../../stores/meStore";
 import Dropdown from "react-toolbox/lib/dropdown";
 import {List, ListSubHeader} from "react-toolbox/lib/list";
 import ListItem from "./../common/react-toolbox-override/ListItem";
@@ -36,12 +37,14 @@ class StaffListPage extends Component {
 
   componentWillMount() {
     StaffStore.addChangeListener(this._onChange);
-    UserStore.addChangeListener(this._onChange);
-
     StaffActions.initialize(this.props.location.query || {});
 
-    if (!UserStore.getUsers().length) {
-      UserActions.initialize();
+    if (MeStore.getUser().role.toLowerCase() === "admin") {
+      UserStore.addChangeListener(this._onChange);
+
+      if (!UserStore.getUsers().length) {
+        UserActions.initialize();
+      }
     }
 
     this.setActions([]);
@@ -49,7 +52,9 @@ class StaffListPage extends Component {
 
   componentWillUnmount() {
     StaffStore.removeChangeListener(this._onChange);
-    UserStore.removeChangeListener(this._onChange);
+    if (MeStore.getUser()._id && MeStore.getUser().role.toLowerCase() === "admin") {
+      UserStore.removeChangeListener(this._onChange);
+    }
   }
 
   componentWillReceiveProps(props) {
@@ -103,7 +108,7 @@ class StaffListPage extends Component {
           // label: "Remove",
           title: "Remove",
           icon: "delete",
-          onClick: () => this.removeStaff.bind(this, this.state.staffs[selected[0]]._id)
+          onClick: this.removeStaff.bind(this, this.state.staffs[selected[0]]._id)
         }
       })
     } else {
@@ -127,10 +132,28 @@ class StaffListPage extends Component {
       return null;
     }
 
-    const users = UserStore.getUsers();
+    let dropdown;
 
-    if (!users.length) {
-      return null;
+    if (MeStore.getUser().role.toLowerCase() === "admin") {
+      const users = UserStore.getUsers();
+
+      if (!users.length) {
+        return null;
+      }
+
+      dropdown =
+        (
+          <Dropdown
+            auto
+            label="Filter by partner"
+            onChange={this.handlePartnerChange}
+            source={[{label: "All partners", value: ""}, {
+              label: "Only unsigned",
+              value: "-1"
+            }].concat(users.map(user => ({label: user.name, value: user._id})))}
+            value={this.props.location.query.partner || ""}
+          />
+        );
     }
 
     const grouped = this.state.staffs.reduce((self, current) => {
@@ -146,17 +169,7 @@ class StaffListPage extends Component {
 
     return (
       <section>
-        <Dropdown
-          auto
-          label="Filter by partner"
-          onChange={this.handlePartnerChange}
-          source={[{label: "All partners", value: ""}, {
-            label: "Only unsigned",
-            value: "-1"
-          }].concat(users.map(user => ({label: user.name, value: user._id})))}
-          value={this.props.location.query.partner || ""}
-        />
-
+        {dropdown}
 
         <List selectable ripple>
           {Object.keys(grouped).map((key) => (

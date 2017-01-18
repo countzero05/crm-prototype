@@ -80,21 +80,27 @@ class UserPage extends Component {
                 name: "name",
                 value: this.state.name,
                 type: "text",
-                label: "Name"
+                label: "Name",
+                required: true,
+                error: this.state.error && this.state.error.name
               },
               email: {
                 kind: "input",
                 name: "email",
                 value: this.state.email,
                 type: "email",
-                label: "Email"
+                label: "Email",
+                required: true,
+                error: this.state.error && this.state.error.email
               },
               password: {
                 kind: "input",
                 name: "password",
                 value: this.state.password,
                 type: "password",
-                label: "Password"
+                label: "Password",
+                required: true,
+                error: this.state.error && this.state.error.password
               },
               role: {
                 kind: "dropdown",
@@ -111,6 +117,8 @@ class UserPage extends Component {
                   }
                 ],
                 value: this.state.role,
+                required: true,
+                error: this.state.error && this.state.error.role
               },
               active: {
                 kind: "switch",

@@ -1,7 +1,6 @@
 import ExtractTextPlugin from "extract-text-webpack-plugin";
 import webpack from "webpack";
 import path from "path";
-import HtmlWebpackPlugin from "html-webpack-plugin";
 // import FaviconsWebpackPlugin from "favicons-webpack-plugin";
 
 export default {
@@ -27,7 +26,7 @@ export default {
   output: {
     path: __dirname + "/dist", // Note: Physical files are only output by the production build task `npm run build`.
     publicPath: "/",
-    filename: "[name].js"
+    filename: "bundle.js"
   },
   devServer: {
     contentBase: "./src"
@@ -35,16 +34,10 @@ export default {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    // new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin({
-      filename: "[name].css",
+      filename: "bundle.css",
       allChunks: false
-    }),
-    new HtmlWebpackPlugin({
-      template: "src/index.html",
-      inject: "body",
-      favicon: path.join(__dirname, "src/static/images/favicon.png"),
-      hash: true
     }),
     // new FaviconsWebpackPlugin(path.join(__dirname, "src/static/images/favicon.png")),
   ],

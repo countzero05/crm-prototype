@@ -4,12 +4,13 @@ import {stringify} from "qs";
 const _fields = {
   _id: String,
   name: String,
-  email: String,
+  email: val => val ? String(val) : undefined,
   comment: String,
   active: Boolean,
-  partner: String,
+  partner: val => val ? String(val) : null,
   dateStart: val => val ? new Date(val) : val,
   dateEnd: val => val ? new Date(val) : val,
+  file: val => val ? String(val) : val
 };
 
 const filter = (obj, fields = _fields) => {
@@ -40,3 +41,10 @@ export const saveStaff = staff => {
 };
 
 export const deleteStaff = id => request.delete(`/api/staff/${id}`).then(({data}) => filter(data) || {});
+
+export const upload = (id, file) => {
+  const data = new FormData();
+  data.append("file", file);
+
+  return request.put(`/api/staff/upload/${id}`, data);
+};

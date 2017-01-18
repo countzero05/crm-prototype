@@ -34,8 +34,12 @@ router.post("/login", function (req, res) {
 });
 
 router.get("/logout", function (req, res) {
-  delete req.session.user_id;
-  res.json({});
+  try {
+    delete req.session.user_id;
+    res.json({});
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 export default router;

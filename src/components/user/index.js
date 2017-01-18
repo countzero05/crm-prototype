@@ -78,7 +78,8 @@ class UserListPage extends Component {
           // label: "Remove",
           title: "Remove",
           icon: "delete",
-          onClick: () => this.removeUser.bind(this, this.state.users[selected[0]]._id)
+          onClick: this.removeUser.bind(this, this.state.users[selected[0]]._id)
+
         }
       })
     } else {

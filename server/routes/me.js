@@ -37,7 +37,7 @@ router.put("/", function (req, res) {
 
   req.user.save((err, user) => {
     if (err) {
-      return res.status(500).json({...req.user, error: err.message});
+      return res.status(400).json({...req.user, error: err.message});
     }
 
     res.json(user);

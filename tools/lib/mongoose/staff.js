@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 let Schema = mongoose.Schema;
+import uniqueValidator from "mongoose-unique-validator";
 
 const validateEmail = email => {
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
@@ -8,11 +9,12 @@ const validateEmail = email => {
 let staffSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: "Name is required"
   },
   email: {
     type: String,
     trim: true,
+    sparse: true,
     unique: true,
     required: [false, "Email address is required"],
     validate: [validateEmail, "Please fill a valid email address"],
@@ -42,6 +44,10 @@ let staffSchema = new Schema({
     type: String,
     required: false
   },
+  file: {
+    type: String,
+    required: false
+  },
   created: {
     type: Date,
     default: Date.now,
@@ -53,6 +59,10 @@ let staffSchema = new Schema({
     required: true
   }
 });
+
+staffSchema.index({email: 1}, {unique: true, sparse: true});
+
+staffSchema.plugin(uniqueValidator, {message: "{PATH} is already in use, but it must be unique"});
 
 staffSchema.pre("save", function (next) {
   this.updated = new Date();

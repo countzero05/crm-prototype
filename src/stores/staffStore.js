@@ -30,6 +30,9 @@ Dispatcher.register(function (action) {
     case ActionTypes.UPDATE_STAFF:
       StaffStore.emitChange(ActionTypes.UPDATE_STAFF, action.user);
       break;
+    case ActionTypes.UPLOAD_STAFF:
+      StaffStore.emitChange(ActionTypes.UPLOAD_STAFF, action.user);
+      break;
     case ActionTypes.CREATE_STAFF:
       StaffStore.emitChange(ActionTypes.CREATE_STAFF, action.user);
       break;

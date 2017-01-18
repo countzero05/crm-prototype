@@ -8,7 +8,7 @@ import favicons from "favicons";
 /* eslint-disable no-unused-vars */
 import colors from "colors";
 
-console.log("Starting generating icons...".green);
+console.log("Start generating icons...".green);
 
 const source = path.join(__dirname, "../src/static/images/favicon.png");           // Source image(s). `string`, `buffer` or array of `string`
 
