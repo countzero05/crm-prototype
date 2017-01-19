@@ -10,8 +10,9 @@ import MeStore from "./../../stores/meStore";
 import Dropdown from "react-toolbox/lib/dropdown";
 import {List, ListSubHeader} from "react-toolbox/lib/list";
 import ListItem from "./../common/react-toolbox-override/ListItem";
-import format from "date-format";
+// import format from "date-format";
 import style from "./../../static/stylesheets/style.scss";
+import date from "locutus/php/datetime/date"
 
 class StaffListPage extends Component {
   static propTypes = {
@@ -185,7 +186,7 @@ class StaffListPage extends Component {
                   selectable={true}
                   ripple={true}
                   caption={person.name}
-                  legend={`${person.dateStart ? format("yyyy-MM-dd", person.dateStart) : ""} ${person.dateStart || person.dateEnd ? "-" : ""} ${person.dateEnd ? format("yyyy-MM-dd", person.dateEnd) : ""}`}
+                  legend={`${person.dateStart ? date("Y-m-d", person.dateStart) : ""} ${person.dateStart || person.dateEnd ? "-" : ""} ${person.dateEnd ? date("Y-m-d", person.dateEnd) : ""}`}
                   rightIcon={person.active ? "star" : undefined}
                   to={this.context.router.createHref({...location, pathname: `/staff/${person._id}`})}
                 />

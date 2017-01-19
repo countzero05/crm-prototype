@@ -1,11 +1,10 @@
-import ExtractTextPlugin from "extract-text-webpack-plugin";
-import webpack from "webpack";
-import path from "path";
-// import FaviconsWebpackPlugin from "favicons-webpack-plugin";
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require("webpack");
+const path = require("path");
 
-export default {
+module.exports = {
   // debug: true,
-  devtool: "inline-source-map",
+  devtool: "cheap-module-eval-source-map",
   // noInfo: false,
   // entry: [
   //   "eventsource-polyfill", // necessary for hot reloading with IE
@@ -39,7 +38,6 @@ export default {
       filename: "bundle.css",
       allChunks: false
     }),
-    // new FaviconsWebpackPlugin(path.join(__dirname, "src/static/images/favicon.png")),
   ],
   module: {
     rules: [
@@ -62,11 +60,11 @@ export default {
         loader: "babel-loader",
         query: {
           cacheDirectory: true,
-          presets: ["react", ["env", {
-            "targets": {
-              "browsers": ["last 3 versions"]
-            }
-          }], "stage-0"]
+          presets: [
+            "react",
+            ["es2015", {"modules": false}],
+            "stage-0"
+          ]
         },
         exclude: /node_modules/
       },

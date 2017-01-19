@@ -1,6 +1,15 @@
 {
-  "presets":  ["node7", "stage-0", "react"],
-  "plugins":  [],
+  "presets": [
+    "node7",
+    [
+      "es2015",
+      {
+        "modules": false
+      }
+    ],
+    "stage-0"
+  ],
+  "plugins": [],
   "env": {
     "development": {
       "presets": [

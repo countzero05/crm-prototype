@@ -1,12 +1,12 @@
-import webpack from "webpack";
-import path from "path";
-import ExtractTextPlugin from "extract-text-webpack-plugin";
+const webpack = require("webpack");
+const path = require("path");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const GLOBALS = {
   "process.env.NODE_ENV": JSON.stringify("production")
 };
 
-export default {
+module.exports = {
   resolve: {
     alias: {
       "react": "react-lite",
@@ -14,7 +14,7 @@ export default {
     }
   },
   // debug: true,
-  devtool: "source-map",
+  devtool: "hidden-source-map",
   // noInfo: false,
   entry: [
     "./src/index"
@@ -28,16 +28,27 @@ export default {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin(GLOBALS),
-    // new webpack.optimize.DedupePlugin(),
-    // new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
     new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        screw_ie8: true,
+        conditionals: true,
+        unused: true,
+        comparisons: true,
+        sequences: true,
+        dead_code: true,
+        evaluate: true,
+        if_return: true,
+        join_vars: true,
+      },
       output: {
         comments: false
       },
-      minimize: true,
-      sourceMap: false,
-      debug: false,
-      mangle: true
     }),
     new ExtractTextPlugin({
       filename: "bundle.css",
@@ -47,13 +58,15 @@ export default {
   module: {
     rules: [
       {
-        test: /\.js$/, include: path.join(__dirname, "src"), loader: "babel-loader",
+        test: /\.js$/,
+        include: [path.join(__dirname, "src"), path.join(__dirname, "node_modules/date_format")],
+        loader: "babel-loader",
         query: {
-          presets: ["react", ["env", {
-            "targets": {
-              "browsers": ["last 3 versions"]
-            }
-          }], "stage-0"]
+          presets: [
+            ["es2015", {"modules": false}],
+            "stage-0",
+            "react",
+          ]
         },
         exclude: /node_modules/
       },
