@@ -1,2 +1,1 @@
-# borislav
-staff control system for Borislav
+# Small CRM System prototype
